@@ -1,0 +1,30 @@
+import conf.TestManager;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.openqa.selenium.Keys;
+import pages.BoardsPage;
+import pages.HomePage;
+import pages.LoginPage;
+
+public class BasicSelenium extends TestManager {
+
+    @Test
+    public void openHomePage(){
+        HomePage homePage = new HomePage(driver);
+        homePage.openPage(homePage.url);
+        String title = homePage.getTitle();
+        Assertions.assertEquals(title, homePage.title);
+    }
+
+    @Test
+    public void loginTest(){
+        HomePage homePage = new HomePage(driver);
+        homePage.openPage(homePage.url);
+        homePage.loginLink.click();
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.emailField.sendKeys("ginnibumblebee@gmail.com");
+        loginPage.passwordField.sendKeys("Zhenya123" + Keys.ENTER);
+        BoardsPage boardsPage = new BoardsPage(driver);
+        Assertions.assertTrue(boardsPage.allBoardsContainer.isExist());
+    }
+}
